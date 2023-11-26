@@ -1,6 +1,6 @@
 {
-  "name": "min-otel",
-  "version": "1.0.0",
+  "name": "@jessitron/min-otel",
+  "version": "0.0.1",
   "description": "can i make a package and publish it and use it from html",
   "source": "src/index.html",
   "scripts": {
@@ -20,7 +20,8 @@
       "sourceMap": true
     }
   },
-  "author": "",
+  "author": "Jessica Kerr <jessitron@honeycomb.io>",
+  "homepage": "https://github.com/jessitron/min-otel",
   "license": "ISC",
   "dependencies": {
     "@opentelemetry/context-zone": "^1.18.1",

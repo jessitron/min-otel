@@ -20,6 +20,17 @@ and parcel build doesn't build the html?
 
 I tried copying the index.js output over to another project and importing it in html, but I got an error, something mysterious in import syntax.
 
-It is time to give up :sad:
-
 the 'build' and 'serve' commands seem to fight. When one crashes and does nothing, try removing `.parcel-cache`
+
+I don't like what 'parcel serve' does. I think it builds the JS differently.
+
+I got this to work with
+
+`npm run build` (which runs parcel with the 'dammit' target)
+
+and then copying `index.html` into the dist directory, and running `http-server` on the dist directory.
+
+## now can I get this file online
+
+It'd be lovely if unpkg.com would serve this file, it would look like the others.
+I might as well put it up on NPM.
