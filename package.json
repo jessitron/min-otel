@@ -5,7 +5,7 @@
   "source": "src/index.html",
   "scripts": {
     "watch": "parcel watch",
-    "serve": "parcel serve --target dammit",
+    "serve": "parcel serve",
     "build": "parcel build --target dammit"
   },
   "targets": {
@@ -15,7 +15,7 @@
       "outputFormat": "global",
       "isLibrary": false,
       "source": [
-        "src/index.js"
+        "src/otel.js"
       ],
       "sourceMap": false
     }
