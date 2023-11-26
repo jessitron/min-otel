@@ -1,0 +1,20 @@
+{
+  "name": "min-otel",
+  "version": "1.0.0",
+  "description": "can i make a package and publish it and use it from html",
+  "source": "src/index.js",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@opentelemetry/sdk-trace-web": "^1.18.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.10.3"
+  }
+}
