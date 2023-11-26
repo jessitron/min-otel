@@ -2,13 +2,15 @@
   "name": "min-otel",
   "version": "1.0.0",
   "description": "can i make a package and publish it and use it from html",
-  "source": "src/index.js",
+  "source": "src/index.html",
   "scripts": {
     "watch": "parcel watch",
-    "build": "parcel build"
+    "serve": "parcel serve --target dammit",
+    "build": "parcel build --target dammit"
   },
   "targets": {
     "dammit": {
+      "includeNodeModules": true,
       "context": "browser",
       "outputFormat": "global",
       "isLibrary": false
