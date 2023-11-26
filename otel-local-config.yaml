@@ -1,0 +1,25 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        cors:
+          allowed_origins:
+            - "*"
+
+processors:
+  batch:
+
+exporters:
+  logging:
+    loglevel: debug
+  otlp:
+    endpoint: "api.honeycomb.io:443"
+    headers:
+      "x-honeycomb-team": "aEFVPiVhf8WKuGAiBk9AWA"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, otlp]

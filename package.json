@@ -2,7 +2,7 @@
   "name": "min-otel",
   "version": "1.0.0",
   "description": "can i make a package and publish it and use it from html",
-  "source": "src/index.html",
+  "source": "src/index.js",
   "scripts": {
     "watch": "parcel watch",
     "serve": "parcel serve --target dammit",

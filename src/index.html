@@ -2,7 +2,11 @@
   <head>
     <meta charset="utf-8" />
     <title>My First Parcel App</title>
-    <script type="module" src="index.js"></script>
+    <script type="module">
+      import { initializeTracing } from "./index.js";
+
+      initializeTracing();
+    </script>
   </head>
   <body>
     <h1>Hello, World!</h1>
