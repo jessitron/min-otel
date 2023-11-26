@@ -18,8 +18,7 @@ export function initializeTracing() {
     // Changing default contextManager to use ZoneContextManager - supports asynchronous operations - optional
     contextManager: new ZoneContextManager(),
   });
-
-  console.log(provider);
+  console.log("Tracing initialized");
 }
 
 export function sendTestSpan() {

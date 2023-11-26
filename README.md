@@ -21,3 +21,5 @@ and parcel build doesn't build the html?
 I tried copying the index.js output over to another project and importing it in html, but I got an error, something mysterious in import syntax.
 
 It is time to give up :sad:
+
+the 'build' and 'serve' commands seem to fight. When one crashes and does nothing, try removing `.parcel-cache`

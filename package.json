@@ -13,7 +13,11 @@
       "includeNodeModules": true,
       "context": "browser",
       "outputFormat": "global",
-      "isLibrary": false
+      "isLibrary": false,
+      "source": [
+        "src/index.js"
+      ],
+      "sourceMap": false
     }
   },
   "author": "",
