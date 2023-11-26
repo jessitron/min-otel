@@ -6,4 +6,5 @@ docker run \
 otel/opentelemetry-collector \
 --config otel-local-config.yaml;
 
-# curl -i http://localhost:4318/v1/traces -X POST -H "Cont/json" -d @test-span.json
+# to test it:
+# curl -i http://localhost:4318/v1/traces -X POST -H "Content-Type: application/json" -d @test-span.json
