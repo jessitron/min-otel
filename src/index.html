@@ -2,14 +2,14 @@
   <head>
     <meta charset="utf-8" />
     <title>My First Parcel App</title>
-    <script type="module">
-      import { initializeTracing, sendTestSpan } from "./otel.js";
-
-      initializeTracing();
-      sendTestSpan();
+    <script src="otel.js"></script>
+    <script>
+      console.log("I am the script yo");
+      Otel.initializeTracing();
+      Otel.sendTestSpan();
     </script>
   </head>
   <body>
-    <h1>Hello, World!</h1>
+    <h1>Hello, World! eh?</h1>
   </body>
 </html>

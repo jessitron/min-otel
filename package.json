@@ -17,7 +17,7 @@
       "source": [
         "src/otel.js"
       ],
-      "sourceMap": false
+      "sourceMap": true
     }
   },
   "author": "",

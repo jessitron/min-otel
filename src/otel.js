@@ -26,3 +26,5 @@ export function sendTestSpan() {
   console.log("Sending test span", span.spanContext());
   span.end();
 }
+
+window.Otel = { sendTestSpan, initializeTracing };
