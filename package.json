@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "can i make a package and publish it and use it from html",
   "source": "src/index.js",
-  "main": "dist/main.js",
-  "module": "dist/module.js",
-  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build"
+  },
+  "targets": {
+    "dammit": {
+      "context": "browser",
+      "outputFormat": "global",
+      "isLibrary": false
+    }
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +20,7 @@
     "@opentelemetry/sdk-trace-web": "^1.18.1"
   },
   "devDependencies": {
-    "parcel": "^2.10.3"
+    "parcel": "^2.10.3",
+    "process": "^0.11.10"
   }
 }
