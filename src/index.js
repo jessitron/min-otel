@@ -15,5 +15,7 @@ export function initializeTracing() {
 }
 
 export function sendTestSpan() {
-  trace.getTracer("test span").startSpan("test span").end();
+  const span = trace.getTracer("test span").startSpan("test span");
+  console.log("Sending test span", span.spanContext());
+  span.end();
 }
