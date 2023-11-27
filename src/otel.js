@@ -27,4 +27,4 @@ export function sendTestSpan() {
   span.end();
 }
 
-window.Otel = { sendTestSpan, initializeTracing };
+window.Otel = { sendTestSpan, initializeTracing, trace };
