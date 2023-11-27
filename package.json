@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "description": "can i make a package and publish it and use it from html",
   "source": "src/index.html",
+  "main": "dist/otel.js",
+  "files": [
+    "README.md",
+    "src/*"
+  ],
   "scripts": {
     "watch": "parcel watch",
     "serve": "parcel serve",
