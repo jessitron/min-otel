@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+set -x
+
+npm run build
+
+release_title="$(cat package.json | jq -r .version)"
+
+gh release create -n "export otel.trace" --title $release_title --prerelease $release_title dist/otel.js*
