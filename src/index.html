@@ -5,7 +5,7 @@
     <script src="otel.js"></script>
     <script>
       console.log("I am the script yo");
-      Otel.initializeTracing();
+      Otel.initializeTracing("min-otel");
       Otel.sendTestSpan();
       Otel.instrumentGlobalErrors();
       Otel.trace.getTracer("user script").startSpan("another test span").end();

@@ -5,10 +5,15 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
-function initializeTracing() {
+function initializeTracing(serviceName = "browser") {
   const provider = new WebTracerProvider({
     resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: "browser",
+      [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
+      "browser.user_agent": window.navigator.userAgent,
+      "browser.language": window.navigator.language,
+      "browser.mobile": window.navigator.mobile,
+      "browser.url": window.location.href,
+      "http.url": window.location.href,
     }),
   });
   provider.addSpanProcessor(new SimpleSpanProcessor(new OTLPTraceExporter()));
