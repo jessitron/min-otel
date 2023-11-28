@@ -1,36 +1,57 @@
-# minimal otel for the browser
+# My minimal OpenTelemetry-for-the-browser distribution
 
-Can I make a .js file that I can import from HTML?
+Currently (November 2023), OpenTelemetry doesn't offer a single .js file that I can import in a script tag.
 
-It needs to do the basics:
+I want this so that my toy app can send spans to Honeycomb to tell me that someone hit the page, and when some JS threw an error.
 
-https://opentelemetry.io/docs/instrumentation/js/getting-started/browser/
+This repository constructs a .js file, wrapping the OpenTelemetry libraries, using Parcel to bundle the necessary code up. It publishes the .js as a GitHub release.
 
-## progress so far
+## Make your own distribution
 
-I have it making some sort of bundle, and I can call it from an html file
+I don't recommend using this; instead, I recommend copying it and making your own tiny distribution that does what you want and nothing else.
 
-I have to say 'module' for my script in the html, and then import this from within there. Not my preference but it's what I could get parcel to do.
+## Use
 
-I can run the collector locally in Docker -- that's in ./run-collector
+`<script href=https://github.com/jessitron/min-otel/releases/download/v0.0.3/otel.js"></script>`
 
-parcel serve crashes though!!
+(where v0.0.3 is the current prerelease)
 
-and parcel build doesn't build the html?
+This adds an object `Otel` to the global `window`. Use it in your other JavaScript.
 
-I tried copying the index.js output over to another project and importing it in html, but I got an error, something mysterious in import syntax.
+|global| use |
+|------|-----|
+|`Otel.initializeTracing()`|Call this first. It configures OpenTelemetry to send spans over HTTP with Protobuf to a local collector, at port 4318, endpoint `/v1/traces`.|
+|`Otel.sendTestSpan()`|Look for a span named "test span" to see whether tracing works|
+|`Otel.trace`|The `trace` object from `@opentelemetry/api`. Call `getTracer("custom library.name")` to make your own spans|
+|`Otel.instrumentGlobalErrors()`| Listen for errors on the window, and send a span when it happens.|
 
-the 'build' and 'serve' commands seem to fight. When one crashes and does nothing, try removing `.parcel-cache`
 
-I don't like what 'parcel serve' does. I think it builds the JS differently.
+This little wrapper follows [OpenTelemetry's browser instructions](https://opentelemetry.io/docs/instrumentation/js/getting-started/browser/). It doesn't add any automatic instrumentation.
 
-I got this to work with
+Currently this results in a binary under half a meg.
 
-`npm run build` (which runs parcel with the 'dammit' target)
+### examples
 
-and then copying `index.html` into the dist directory, and running `http-server` on the dist directory.
+See [otel.js](https://github.com/jessitron/min-otel/blob/main/src/otel.js) for the code.
 
-## now can I get this file online
+See [index.html](https://github.com/jessitron/min-otel/blob/main/src/index.html) for an example of use; but you'll change the script tag that brings it in, because that one expects `otel.js` locally.
 
-It'd be lovely if unpkg.com would serve this file, it would look like the others.
-I might as well put it up on NPM.
+## Development
+
+Change something in otel.js,`npm install`, and `npm run build`. This builds a parcel target defined in `package.json`. The output goes to `dist/otel.js`. 
+
+To test, change `index.html` and then run `npm run futz` to copy it to dist and serve it. Load the page, and then check the dev tools. Network tab should show hits to `/v1/traces`.
+
+which won't work until you run a collector.
+
+### Run a local collector
+
+Edit `otel-local-config.yaml` and put a Honeycomb API key in the spot.
+
+Start Docker.
+
+`./run-collector`
+
+## notes
+
+Why GitHub releases? Because password reset on npmjs.com is not working. 
