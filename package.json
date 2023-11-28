@@ -11,7 +11,8 @@
   "scripts": {
     "watch": "parcel watch",
     "serve": "parcel serve",
-    "build": "parcel build --target dammit"
+    "build": "parcel build --target dammit",
+    "futz": "cp src/index.html dist && http-server dist"
   },
   "targets": {
     "dammit": {
