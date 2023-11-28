@@ -7,7 +7,12 @@
       console.log("I am the script yo");
       Otel.initializeTracing();
       Otel.sendTestSpan();
+      Otel.instrumentGlobalErrors();
       Otel.trace.getTracer("user script").startSpan("another test span").end();
+    </script>
+    <script>
+      console.log("Throwing an error to test that it will send a span...");
+      throw new Error("Pirates!!");
     </script>
   </head>
   <body>

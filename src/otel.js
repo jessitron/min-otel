@@ -5,8 +5,7 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
-export function initializeTracing() {
-  console.log("it's time to set up tracing baby");
+function initializeTracing() {
   const provider = new WebTracerProvider({
     resource: new Resource({
       [SemanticResourceAttributes.SERVICE_NAME]: "browser",
@@ -15,16 +14,33 @@ export function initializeTracing() {
   provider.addSpanProcessor(new SimpleSpanProcessor(new OTLPTraceExporter()));
 
   provider.register({
-    // Changing default contextManager to use ZoneContextManager - supports asynchronous operations - optional
     contextManager: new ZoneContextManager(),
   });
   console.log("Tracing initialized");
 }
 
-export function sendTestSpan() {
+function instrumentGlobalErrors() {
+  const tracer = trace.getTracer("@jessitron/errors");
+  window.addEventListener("error", (e) => {
+    const span = tracer.startSpan("Error on page");
+    span.setAttributes({
+      error: true,
+      "error.message": e.message,
+      "error.stack": e.error?.stack,
+      "error.filename": e.filename,
+      "error.line_number": e.lineno,
+      "error.column_number": e.colno,
+    });
+    span.end();
+  });
+}
+
+function sendTestSpan() {
   const span = trace.getTracer("test span").startSpan("test span");
   console.log("Sending test span", span.spanContext());
   span.end();
 }
 
-window.Otel = { sendTestSpan, initializeTracing, trace };
+// Now for the REAL export
+export const Otel = { sendTestSpan, initializeTracing, trace, instrumentGlobalErrors };
+window.Otel = Otel;
