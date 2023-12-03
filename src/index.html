@@ -8,7 +8,9 @@
       Otel.initializeTracing("min-otel");
       Otel.sendTestSpan();
       Otel.instrumentGlobalErrors();
-      Otel.trace.getTracer("user script").startSpan("another test span").end();
+      Otel.inSpan("another test span", (span) => {
+        Otel.setAttributes({ "test attribute": "boogers" });
+      });
     </script>
     <script>
       console.log("Throwing an error to test that it will send a span...");

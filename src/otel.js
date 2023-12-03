@@ -5,7 +5,9 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
-function initializeTracing(serviceName = "browser") {
+var tracer;
+
+function initializeTracing(serviceName = "browser", defaultTracerName = "default tracer") {
   const provider = new WebTracerProvider({
     resource: new Resource({
       [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
@@ -21,6 +23,8 @@ function initializeTracing(serviceName = "browser") {
   provider.register({
     contextManager: new ZoneContextManager(),
   });
+
+  tracer = trace.getTracer(defaultTracerName);
   console.log("Tracing initialized");
 }
 
@@ -46,6 +50,23 @@ function sendTestSpan() {
   span.end();
 }
 
+function inSpan(name, callback) {
+  return tracer.startActiveSpan(name, (span) => {
+    const result = callback(span);
+    span.end();
+    return result;
+  });
+}
+
+function setAttributes(obj) {
+  trace.getActiveSpan()?.setAttributes(obj);
+}
+
+/* I'm exporting 'trace' here, but I have a feeling some of the functionality on it is stripped off.
+ * getActiveSpan() was missing, when I tried to use that outside of this project, while this project was not
+ * using it.
+ * Someday, don't export 'trace' because it is a lie. Or do, but document which parts of TraceAPI are gonna be on it.
+ */
+export const Otel = { sendTestSpan, initializeTracing, trace, instrumentGlobalErrors, inSpan, setAttributes };
 // Now for the REAL export
-export const Otel = { sendTestSpan, initializeTracing, trace, instrumentGlobalErrors };
 window.Otel = Otel;
