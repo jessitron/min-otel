@@ -1,6 +1,6 @@
 {
   "name": "@jessitron/min-otel",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "can i make a package and publish it and use it from html",
   "source": "src/index.html",
   "main": "dist/otel.js",
