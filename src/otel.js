@@ -7,7 +7,10 @@ import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions"
 
 var tracer;
 
-function initializeTracing(serviceName = "browser", defaultTracerName = "default tracer") {
+const defaultParameters = { serviceName: "browser", defaultTracerName: "default tracer" };
+
+function initializeTracing(input) {
+  const params = { ...defaultParameters, ...input };
   const provider = new WebTracerProvider({
     resource: new Resource({
       [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
