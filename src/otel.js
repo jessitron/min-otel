@@ -7,10 +7,14 @@ import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions"
 
 var tracer;
 
-const defaultParameters = { serviceName: "browser", defaultTracerName: "default tracer" };
+const defaultParameters = {
+  serviceName: "browser",
+  defaultTracerName: "default tracer",
+  collectorUrl: "http://localhost:4318/v1/traces",
+};
 
 function initializeTracing(input) {
-  const params = { ...defaultParameters, ...input };
+  const { serviceName, defaultTracerName, collectorUrl } = { ...defaultParameters, ...input };
   const provider = new WebTracerProvider({
     resource: new Resource({
       [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
@@ -21,7 +25,7 @@ function initializeTracing(input) {
       "http.url": window.location.href,
     }),
   });
-  provider.addSpanProcessor(new SimpleSpanProcessor(new OTLPTraceExporter()));
+  provider.addSpanProcessor(new SimpleSpanProcessor(new OTLPTraceExporter({ url: collectorUrl })));
 
   provider.register({
     contextManager: new ZoneContextManager(),
