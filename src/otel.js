@@ -4,6 +4,10 @@ import { ZoneContextManager } from "@opentelemetry/context-zone";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { Resource } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
+import { registerInstrumentations } from '@opentelemetry/instrumentation';
+import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
+
+
 
 var tracer;
 
@@ -29,6 +33,10 @@ function initializeTracing(input) {
 
   provider.register({
     contextManager: new ZoneContextManager(),
+  });
+
+  registerInstrumentations({
+    instrumentations: [new DocumentLoadInstrumentation()],
   });
 
   tracer = trace.getTracer(defaultTracerName);
